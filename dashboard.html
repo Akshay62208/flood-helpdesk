@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Admin Dashboard - Flood Help</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap" rel="stylesheet">
+  <style>
+    body { background: #f8fcff; font-family: 'Poppins', Arial, sans-serif; margin:0;}
+    header { background: #007bff; color: white; text-align: center; padding: 32px;}
+    h1 { margin:0;}
+    .content { padding: 28px; }
+    table { width: 100%; border-collapse: collapse; background: white; }
+    th, td { padding: 12px; text-align: left; border-bottom: 1px solid #e4e8ef;}
+    th { background: #e7f1ff; font-weight:600; }
+    tr:hover { background: #ecf6ff;}
+    .no-data { text-align: center; color: #666; margin-top: 30px;}
+    .small-link { font-size:0.97em; color:#007bff; text-decoration:underline;}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Flood Help Admin Dashboard</h1>
+  </header>
+  <div class="content">
+    {% if submissions %}
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Location</th>
+          <th>Problem</th>
+          <th>Help Needed</th>
+          <th>Image</th>
+          <th>Voice</th>
+        </tr>
+        {% for row in submissions %}
+        <tr>
+          <td>{{ row[0] }}</td>
+          <td>{{ row[1] }}</td>
+          <td>
+            {{ row[2] }}
+            {% if row[2] %}
+              <br>
+              <a href="https://maps.google.com/?q={{ row[2]|urlencode }}" class="small-link" target="_blank">View on Map</a>
+            {% endif %}
+          </td>
+          <td>{{ row[3] }}</td>
+          <td>{{ row[4] }}</td>
+          <td>
+            {% if row[5] %}
+              <a href="/{{ row[5] }}" class="small-link" target="_blank">View</a>
+            {% else %}
+              N/A
+            {% endif %}
+          </td>
+          <td>
+            {% if row[6] %}
+              <a href="/{{ row[6] }}" class="small-link" target="_blank">Play</a>
+            {% else %}
+              N/A
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    {% else %}
+      <div class="no-data">No submissions yet.</div>
+    {% endif %}
+  </div>
+</body>
+</html>
